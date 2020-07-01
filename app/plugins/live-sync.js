@@ -29,6 +29,9 @@ module.exports = {
       case 'BattleDimensionHoleDungeonResult':
         this.logDungeon(proxy, req, resp);
         break;
+      case 'BattleDungeonResult_V2':
+        this.logDungeonV2(proxy, req, resp);
+        break;
       case 'SellRune':
         this.logSellRune(proxy, req, resp);
         break;
@@ -42,9 +45,11 @@ module.exports = {
         this.logUnequipRune(proxy, req, resp);
         break;
       case 'AmplifyRune':
+      case 'AmplifyRune_v2':
         this.logAmplifyRune(proxy, req, resp);
         break;
       case 'ConvertRune':
+      case 'ConvertRune_v2':
         this.logConvertRune(proxy, req, resp);
         break;
       case 'BuyBlackMarketItem':
@@ -89,6 +94,22 @@ module.exports = {
 
       if (reward.crate && reward.crate.rune) {
         this.saveAction(proxy, req.wizard_id, resp.tvalue, 'new_rune', { rune: reward.crate.rune });
+      }
+    }
+  },
+
+  logDungeonV2(proxy, req, resp) {
+    const winOrLost = resp.win_lose === 1 ? 'Win' : 'Lost';
+
+    if (winOrLost === 'Win') {
+      const rewards = resp.changed_item_list ? resp.changed_item_list : [];
+
+      if (rewards) {
+        rewards.forEach(reward => {
+          if (reward.type === 8) {
+            this.saveAction(proxy, req.wizard_id, resp.tvalue, 'new_rune', { rune: reward.info });
+          }
+        });
       }
     }
   },

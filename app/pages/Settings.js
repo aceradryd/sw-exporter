@@ -20,18 +20,17 @@ class Settings extends React.Component {
 
   openDialog(e) {
     e.preventDefault();
-    dialog.showOpenDialog(
-      {
+    dialog
+      .showOpenDialog({
         properties: ['openDirectory']
-      },
-      dirName => {
-        if (dirName) {
-          this.setState({ filesPath: dirName.toString() });
-          config.Config.App.filesPath = dirName.toString();
+      })
+      .then(result => {
+        if (!result.canceled) {
+          this.setState({ filesPath: result.filePaths.toString() });
+          config.Config.App.filesPath = result.filePaths.toString();
           ipcRenderer.send('updateConfig');
         }
-      }
-    );
+      });
   }
 
   render() {
@@ -76,6 +75,9 @@ class Settings extends React.Component {
             <Form.Group widths={2}>
               <SettingsItem section="App" setting="clearLogOnLogin" Input={<Checkbox />} />
               <SettingsItem section="App" setting="maxLogEntries" Input={<Input />} />
+            </Form.Group>
+            <Form.Group widths={2}>
+              <SettingsItem section="App" setting="httpsMode" Input={<Checkbox />} />
             </Form.Group>
           </Form>
         </Segment>
