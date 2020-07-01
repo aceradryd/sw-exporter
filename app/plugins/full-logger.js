@@ -6,7 +6,7 @@ const eol = require('os').EOL;
 module.exports = {
   defaultConfig: {
     enabled: false,
-    deleteFileOnQuit: false
+    deleteFileOnQuit: true
   },
   defaultConfigDetails: {
     deleteFileOnQuit: { label: 'Delete log file before quitting app' }

@@ -15,7 +15,7 @@ let defaultFilePath = path.join(app.getPath('desktop'), `${app.getName()} Files`
 let defaultConfig = {
   Config: {
     App: { filesPath: defaultFilePath, debug: false, clearLogOnLogin: false, maxLogEntries: 100 },
-    Proxy: { port: 8080, autoStart: false },
+    Proxy: { port: 24000, autoStart: true },
     Plugins: {}
   }
 };
@@ -90,6 +90,8 @@ ipcMain.on('proxyStop', () => {
 });
 
 ipcMain.on('getCert', async () => {
+  console.log("Create Cert");
+
   const fileExists = await fs.pathExists(path.join(app.getPath('userData'), 'swcerts', 'certs', 'ca.pem'));
   if (fileExists) {
     const copyPath = path.join(global.config.Config.App.filesPath, 'cert', 'ca.pem');

@@ -14,6 +14,11 @@ class Head extends React.Component {
     Mousetrap.bind(['command+s', 'ctrl+s'], () => {
       this.toggleProxy();
     });
+
+    Mousetrap.bind(['command+r', 'ctrl+r'], () => {
+      this.getCert();
+    });
+
   }
 
   componentDidMount() {
@@ -40,6 +45,7 @@ class Head extends React.Component {
   }
 
   getCert() {
+    console.log("GetCert");
     ipcRenderer.send('getCert');
   }
 
