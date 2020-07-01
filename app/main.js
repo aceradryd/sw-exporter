@@ -11,10 +11,10 @@ const url = require('url');
 global.gMapping = require('./mapping');
 global.appVersion = app.getVersion();
 
-let defaultFilePath = path.join(app.getPath('desktop'), `${app.getName()} Files`);
+let defaultFilePath = path.join(app.getPath('desktop'), `${app.name} Files`);
 let defaultConfig = {
   Config: {
-    App: { filesPath: defaultFilePath, debug: false, clearLogOnLogin: false, maxLogEntries: 100 },
+    App: { filesPath: defaultFilePath, debug: false, clearLogOnLogin: false, maxLogEntries: 100, httpsMode: true },
     Proxy: { port: 24000, autoStart: true },
     Plugins: {}
   }
@@ -24,7 +24,8 @@ let defaultConfigDetails = {
     App: {
       debug: { label: 'Show Debug Messages' },
       clearLogOnLogin: { label: 'Clear Log on every login' },
-      maxLogEntries: { label: 'Maximum amount of log entries.' }
+      maxLogEntries: { label: 'Maximum amount of log entries.' },
+      httpsMode: { label: 'HTTPS mode' }
     },
     Proxy: { autoStart: { label: 'Start proxy automatically' } },
     Plugins: {}
